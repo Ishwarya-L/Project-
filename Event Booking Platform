@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Symposium 2025 Team Registration</title>
+    <!-- Load Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --color-primary: #ff4d4d; /* Red Accent */
+            --color-background: #f8f8f8;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            scroll-behavior: smooth;
+        }
+        .btn-primary {
+            background-color: var(--color-primary);
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #e03c3c;
+            transform: translateY(-1px);
+        }
+        .hero-bg {
+            background-color: var(--color-primary);
+        }
+        .app-view { display: none; }
+        .active-view { display: block; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- --- Header (Always Visible) --- -->
+    <header class="bg-gray-900 text-white shadow-lg sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-extrabold tracking-tight text-red-400">SYMPHORIA 2025</h1>
+            <div id="user-info" class="text-sm font-medium">
+                <span id="user-display" class="hidden"></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-4">
+
+        <!-- --- 1. WELCOME / SIGN-UP VIEW (Initial View) --- -->
+        <section id="welcomeView" class="app-view active-view mt-10">
+            <div class="hero-bg text-white p-8 md:p-12 rounded-xl shadow-2xl text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Welcome to the College Symposium!</h2>
+                <p class="text-xl mb-8">Register your individual profile to unlock event booking.</p>
+
+                <form id="signupForm" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-xl text-gray-800">
+                    <h3 class="text-2xl font-semibold mb-6 text-gray-900">Sign Up (Leader Profile)</h3>
+                    
+                    <div class="mb-4">
+                        <label for="signup-name" class="block text-sm font-medium text-gray-700 text-left mb-1">Full Name</label>
+                        <input type="text" id="signup-name" required placeholder="Team Leader Name"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500">
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="signup-email" class="block text-sm font-medium text-gray-700 text-left mb-1">Email Address</label>
+                        <input type="email" id="signup-email" required placeholder="leader@example.com"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500">
+                    </div>
+                    
+                    <button type="submit" class="w-full btn-primary text-white font-bold py-3 px-4 rounded-lg shadow-md">
+                        Proceed to Events
+                    </button>
+
+                    <p id="signup-error-msg" class="text-red-500 text-sm mt-3 hidden">Error message</p>
+                </form>
+            </div>
+        </section>
+
+        <!-- --- 2. EVENTS DASHBOARD VIEW --- -->
+        <section id="eventsView" class="app-view mt-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-2">Available Team Events</h2>
+            
+            <div id="events-list" class="space-y-6">
+                <!-- Event Card 1 -->
+                <div class="flex flex-col md:flex-row bg-white p-5 rounded-xl shadow-lg border-l-4 border-red-500">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-gray-900">💻 Coding Challenge</h3>
+                        <p class="text-gray-600 mt-1">Test your logic and programming skills in a 4-hour hackathon style event.</p>
+                        <p class="text-sm text-gray-500 mt-2">Date: Nov 22, 2025 | Max Team Size: 4</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 md:ml-6 flex items-center justify-end">
+                        <button onclick="bookEvent('Coding Challenge')" class="btn-primary text-white font-semibold py-2 px-6 rounded-full shadow-md">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event Card 2 -->
+                <div class="flex flex-col md:flex-row bg-white p-5 rounded-xl shadow-lg border-l-4 border-red-500">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-gray-900">📝 Paper Presentation</h3>
+                        <p class="text-gray-600 mt-1">Present your innovative research to a panel of experts.</p>
+                        <p class="text-sm text-gray-500 mt-2">Date: Nov 20, 2025 | Max Team Size: 2</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 md:ml-6 flex items-center justify-end">
+                        <button onclick="bookEvent('Paper Presentation')" class="btn-primary text-white font-semibold py-2 px-6 rounded-full shadow-md">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Event Card 3 -->
+                <div class="flex flex-col md:flex-row bg-white p-5 rounded-xl shadow-lg border-l-4 border-red-500">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-gray-900">🤖 AI Workshop</h3>
+                        <p class="text-gray-600 mt-1">Hands-on session on foundational machine learning and AI tools.</p>
+                        <p class="text-sm text-gray-500 mt-2">Date: Nov 25, 2025 | Max Team Size: 3</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 md:ml-6 flex items-center justify-end">
+                        <button onclick="bookEvent('AI Workshop')" class="btn-primary text-white font-semibold py-2 px-6 rounded-full shadow-md">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="logout()" class="mt-8 text-red-500 hover:text-red-700 transition">← Logout / New Leader Sign Up</button>
+        </section>
+
+    </main>
+
+    <!-- --- Booking Details Modal (Pop-up for Team Credentials) --- -->
+    <div id="bookingDetailsModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-lg w-full text-gray-800 transform transition-all duration-300 scale-95 opacity-0" id="detailsModalContent">
+            <h4 class="text-2xl font-bold mb-2 text-gray-900" id="booking-title">Register Team for [Event Name]</h4>
+            <p class="text-gray-600 mb-6">Please provide your team details to finalize the registration.</p>
+
+            <form id="bookingForm">
+                <div class="mb-4">
+                    <label for="team-name" class="block text-sm font-medium text-gray-700 mb-1">Team Name</label>
+                    <input type="text" id="team-name" required placeholder="The Code Breakers"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="num-members" class="block text-sm font-medium text-gray-700 mb-1">Number of Team Members (including leader)</label>
+                    <input type="number" id="num-members" required min="1" max="4" value="2"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500">
+                    <p class="text-xs text-gray-500 mt-1">Max members is typically 4, check event details for specifics.</p>
+                </div>
+                
+                <div class="bg-gray-100 p-3 rounded-lg text-sm mb-6 border border-gray-200">
+                    <p class="font-semibold text-gray-800 mb-1">Team Leader Details</p>
+                    <p>Name: <span id="leader-name-display" class="font-medium"></span></p>
+                    <p>Email: <span id="leader-email-display" class="font-medium"></span></p>
+                </div>
+
+                <p id="booking-error-msg" class="text-red-500 text-sm mb-4 hidden">Error message</p>
+
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="closeDetailsModal()" class="px-4 py-2 text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn-primary text-white font-semibold py-2 px-6 rounded-lg shadow-md">
+                        Finalize Registration
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- --- Success Confirmation Modal (Pop-up) --- -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-sm w-full text-center transform transition-all duration-300 scale-95 opacity-0" id="successModalContent">
+            <svg class="mx-auto h-16 w-16 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h4 class="text-2xl font-bold mb-3 text-gray-900">Registration Confirmed!</h4>
+            <p id="modalMessage" class="text-gray-600 mb-6"></p>
+            <button onclick="closeSuccessModal()" class="w-full btn-primary text-white font-semibold py-2 rounded-lg">
+                View Other Events
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        let isAuthenticated = false;
+        let userName = '';
+        let userEmail = '';
+        let currentEventToBook = ''; // Stores the event name while the booking modal is open
+
+        const WELCOME_VIEW = document.getElementById('welcomeView');
+        const EVENTS_VIEW = document.getElementById('eventsView');
+        const USER_DISPLAY = document.getElementById('user-display');
+        const SIGNUP_ERROR_MSG = document.getElementById('signup-error-msg');
+        
+        const DETAILS_MODAL = document.getElementById('bookingDetailsModal');
+        const DETAILS_MODAL_CONTENT = document.getElementById('detailsModalContent');
+        const SUCCESS_MODAL = document.getElementById('successModal');
+        const SUCCESS_MODAL_CONTENT = document.getElementById('successModalContent');
+        const MODAL_MESSAGE = document.getElementById('modalMessage');
+        const BOOKING_TITLE = document.getElementById('booking-title');
+        const BOOKING_FORM = document.getElementById('bookingForm');
+        const BOOKING_ERROR_MSG = document.getElementById('booking-error-msg');
+
+
+        function renderView() {
+            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
+
+            if (isAuthenticated) {
+                EVENTS_VIEW.classList.add('active-view');
+                USER_DISPLAY.textContent = `Welcome, ${userName.split(' ')[0]}!`;
+                USER_DISPLAY.classList.remove('hidden');
+                
+                document.getElementById('leader-name-display').textContent = userName;
+                document.getElementById('leader-email-display').textContent = userEmail;
+            } else {
+                WELCOME_VIEW.classList.add('active-view');
+                USER_DISPLAY.textContent = '';
+                USER_DISPLAY.classList.add('hidden');
+            }
+        }
+
+
+        function handleSignup(e) {
+            e.preventDefault();
+            SIGNUP_ERROR_MSG.classList.add('hidden');
+
+            const nameInput = document.getElementById('signup-name');
+            const emailInput = document.getElementById('signup-email');
+            
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+
+            if (!name || !email) {
+                SIGNUP_ERROR_MSG.textContent = 'Please enter both your name and email.';
+                SIGNUP_ERROR_MSG.classList.remove('hidden');
+                return;
+            }
+            if (!email.includes('@') || !email.includes('.')) {
+                SIGNUP_ERROR_MSG.textContent = 'Please enter a valid email address.';
+                SIGNUP_ERROR_MSG.classList.remove('hidden');
+                return;
+            }
+
+            userName = name;
+            userEmail = email;
+            isAuthenticated = true;
+            
+            nameInput.value = '';
+            emailInput.value = '';
+            renderView();
+        }
+
+        function logout() {
+            isAuthenticated = false;
+            userName = '';
+            userEmail = '';
+            BOOKING_FORM.reset(); // Clear booking form state too
+            renderView();
+        }
+
+
+        function bookEvent(eventName) {
+            if (!isAuthenticated) {
+                showSuccessModal('Error!', 'Please sign up first to book an event.', false);
+                return;
+            }
+
+            currentEventToBook = eventName;
+            BOOKING_TITLE.textContent = `Register Team for ${eventName}`;
+            BOOKING_ERROR_MSG.classList.add('hidden');
+            
+            showModal(DETAILS_MODAL, DETAILS_MODAL_CONTENT);
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            BOOKING_ERROR_MSG.classList.add('hidden');
+
+            const teamName = document.getElementById('team-name').value.trim();
+            const numMembers = parseInt(document.getElementById('num-members').value, 10);
+            
+            if (!teamName) {
+                BOOKING_ERROR_MSG.textContent = 'Please enter a team name.';
+                BOOKING_ERROR_MSG.classList.remove('hidden');
+                return;
+            }
+
+            if (isNaN(numMembers) || numMembers < 1 || numMembers > 4) {
+                BOOKING_ERROR_MSG.textContent = 'Number of team members must be between 1 and 4.';
+                BOOKING_ERROR_MSG.classList.remove('hidden');
+                return;
+            }
+
+            closeModal(DETAILS_MODAL, DETAILS_MODAL_CONTENT);
+
+            console.log("--- FINAL TEAM REGISTRATION ---");
+            console.log(`Event: ${currentEventToBook}`);
+            console.log(`Team Name: ${teamName}`);
+            console.log(`Team Leader: ${userName} (${userEmail})`);
+            console.log(`Total Members: ${numMembers}`);
+            console.log("-----------------------------");
+
+            showSuccessModal(
+                'Registration Confirmed!',
+                `Your team **${teamName}** (${numMembers} members) has been registered for **${currentEventToBook}**! A confirmation has been sent to ${userEmail}.`,
+                true
+            );
+
+            BOOKING_FORM.reset();
+            currentEventToBook = '';
+        }
+
+
+        function showModal(modalElement, contentElement) {
+            modalElement.classList.remove('hidden');
+            setTimeout(() => {
+                contentElement.classList.remove('scale-95', 'opacity-0');
+                contentElement.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal(modalElement, contentElement) {
+            contentElement.classList.remove('scale-100', 'opacity-100');
+            contentElement.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                 modalElement.classList.add('hidden');
+            }, 300);
+        }
+        
+        function closeDetailsModal() {
+            closeModal(DETAILS_MODAL, DETAILS_MODAL_CONTENT);
+        }
+
+        function closeSuccessModal() {
+            closeModal(SUCCESS_MODAL, SUCCESS_MODAL_CONTENT);
+        }
+
+        function showSuccessModal(title, message, isSuccess = true) {
+            document.querySelector('#successModalContent svg').classList.toggle('text-green-500', isSuccess);
+            document.querySelector('#successModalContent svg').classList.toggle('text-red-500', !isSuccess);
+            document.querySelector('#successModalContent h4').textContent = title;
+            MODAL_MESSAGE.innerHTML = message;
+            
+            showModal(SUCCESS_MODAL, SUCCESS_MODAL_CONTENT);
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('signupForm').addEventListener('submit', handleSignup);
+            document.getElementById('bookingForm').addEventListener('submit', handleBookingSubmit);
+            
+            renderView();
+        });
+    </script>
+</body>
+</html>
